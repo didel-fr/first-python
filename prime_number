@@ -1,0 +1,41 @@
+#ranger les nombres trouvés dans une bdd sqlite
+# coding: utf-8
+import sqlite3
+#création bdd
+conn = sqlite3.connect('prime_number.db')
+#création table
+cursor = conn.cursor()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS numb(
+     id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+     Prime_num INTERGER
+)
+""")
+conn.commit()
+
+#Trouver et stocker les nombres premiers.
+#Premiere etape, generer des nombres impairs.
+
+nombre=1
+while nombre!=171:
+    nombre+=2
+#afficher le 2
+#eliminer les multiples.
+    if nombre <=3:
+        print(2)
+    if nombre <=13:
+        print (nombre)
+    elif nombre %5 !=0:
+            if nombre %3 !=0:
+                if nombre % 7 !=0:
+                    if nombre % 11 !=0:
+                        if nombre % 13 !=0:
+                            #inserer les données
+                            cursor.execute("""
+                            INSERT INTO numb(Prime_num) VALUES(?)""",nombre)
+                            print (nombre)
+                            list=[]
+                            list.append (nombre)
+cursor.execute("""SELECT Prime_num FROM numb""")
+numb1 = cursor.fetchone()
+print(numb1)   
